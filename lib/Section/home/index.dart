@@ -12,10 +12,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue,
-      child: Center(
-        child: Text("首页",
+      padding: const EdgeInsets.all(160) ,
+      child: Row(
+        children: [Text("首页",
         textAlign: TextAlign.center,
-        ),
+        ),]
       ),
     );
   }

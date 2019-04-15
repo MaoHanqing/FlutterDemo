@@ -42,8 +42,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - images/icon_player_lyc_tu.png
-   - images/icon_player_lyc_wen.png
+   - images/tabBar_icon/Bars-Icons-course-Inactive@3x.png
+   - images/tabBar_icon/Bars-Icons-course-Light@3x.png
+   - images/tabBar_icon/Bars-Icons-me-Inactive@3x.png
+   - images/tabBar_icon/Bars-Icons-me-Light@3x.png
+   - images/tabBar_icon/Bars-Icons-selfstudy-Inactive@3x.png
+   - images/tabBar_icon/Bars-Icons-selfstudy-Light@3x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
