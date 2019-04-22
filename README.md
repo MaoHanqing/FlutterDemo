@@ -68,4 +68,5 @@
 
 ![](/README/images/listview_separetor.png)
 
-4.
+4. ListView.custom():
+通过SliverChildDelegate，可以任意自定义子控件。
