@@ -11,12 +11,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
-      padding: const EdgeInsets.all(160) ,
-      child: Row(
-        children: [Text("首页",
-        textAlign: TextAlign.center,
-        ),]
+      child: SafeArea(
+        child: ListView.custom(
+       
+          ),
+        )
       ),
     );
   }
