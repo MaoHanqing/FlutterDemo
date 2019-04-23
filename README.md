@@ -70,3 +70,10 @@
 
 4. ListView.custom():
 通过SliverChildDelegate，可以任意自定义子控件。
+        ListView.custom(
+         childrenDelegate: SliverChildBuilderDelegate(
+           (context, index) {
+             return Container();
+           },
+           childCount: 10,
+         ),
