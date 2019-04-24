@@ -16,10 +16,14 @@ class _HomeState extends State<Home> {
         GestureDetector(child: Text("ListView"),
           onTap: (){
             Navigator.push(context, CupertinoPageRoute(
-              maintainState: true,
               title: "ListView",
               builder: (_){
-                return ShowList();
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    middle: Text("ListView"),
+                  ),
+                  child: ShowList(),
+                );
               }
             ));
             print("ddd");
