@@ -4,7 +4,7 @@ import './util/util_ui.dart' show TabView;
 import './Section/Home/index.dart' show Home;
 import './Section/study/index.dart' show Study;
 import './Section//me/index.dart' show Me;
-
+import './Section/listView/index.dart'; 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -31,8 +31,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var images = this.images();
+    
     return CupertinoApp(
-        home: CupertinoTabScaffold(
+      // initialRoute: "/",
+      routes: {
+        "/routeName": (BuildContext context) => ShowList(),
+        "/Study": (BuildContext context) => Study(),
+        '/Me': (BuildContext context) => Me()
+      },
+      home: CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(

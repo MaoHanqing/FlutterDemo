@@ -1,6 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
 class TabView extends CupertinoTabView {
+
+  static navigateTo(BuildContext context, Widget child,{bool isShowNavigation = true, String navigationTitle}){
+    Navigator.of(context).push(CupertinoPageRoute(
+      builder: (BuildContext context){
+        return loadPageScffloldWithTitle(child);
+      }
+    ));
+  }
+
+
   static CupertinoPageScaffold loadPageScffloldWithTitle(Widget child,{String navBarTitle}){
     CupertinoNavigationBar navbar;
     if (navBarTitle != null){

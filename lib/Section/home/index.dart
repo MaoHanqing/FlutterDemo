@@ -15,6 +15,8 @@ class _HomeState extends State<Home> {
       children: <Widget>[
         GestureDetector(child: Text("ListView"),
           onTap: (){
+            Navigator.of(context).pushNamed("/routeName");
+            return;
             Navigator.push(context, CupertinoPageRoute(
               title: "ListView",
               builder: (_){
