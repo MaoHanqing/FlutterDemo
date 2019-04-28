@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import './util/util_ui.dart' show TabView;
-import './Section/Home/index.dart' show Home;
+import './Section/components/index.dart';
 import './Section/study/index.dart' show Study;
 import './Section//me/index.dart' show Me;
-import './Section/listView/index.dart'; 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -31,34 +29,44 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var images = this.images();
-    
+
     return CupertinoApp(
-      // initialRoute: "/",
       routes: {
-        "/routeName": (BuildContext context) => ShowList(),
-        "/Study": (BuildContext context) => Study(),
-        '/Me': (BuildContext context) => Me()
+        "/components": (BuildContext context) =>_loadPage(ComponentList(), "Components" ),
+        "/study": (BuildContext context) =>_loadPage( Study(), "2"),
+        "/me" : (BuildContext context) =>_loadPage(Me(), "3"),
+
       },
-      home: CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: [
-          BottomNavigationBarItem(
+        home: CupertinoTabScaffold(
+            tabBar: CupertinoTabBar(
+            items: [
+               BottomNavigationBarItem(
               icon: images[0], title: Text("课程"), activeIcon: images[1]),
-          BottomNavigationBarItem(
+                BottomNavigationBarItem(
               icon: images[2], title: Text("自学"), activeIcon: images[3]),
-          BottomNavigationBarItem(
+              BottomNavigationBarItem(
               icon: images[4], title: Text("个人"), activeIcon: images[5])
         ],
       ),
       tabBuilder: (BuildContext context, int index) {
         if (index == 0) {
-          return TabView.loadTabView("1", Home());
+          return _loadPage(ComponentList(), "Components" );
         } else if (index == 1) {
-          return TabView.loadTabView("2", Study());
+          return _loadPage( Study(), "2");
         } else {
-          return TabView.loadTabView("3", Me());
+          return _loadPage(Me(), "3");
         }
       },
-    ));
+    )
+    );
+  }
+  
+  Widget _loadPage(Widget child,String title){
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(title),
+      ),
+      child: child,
+    );
   }
 }

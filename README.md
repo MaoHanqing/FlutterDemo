@@ -15,6 +15,8 @@
 6. Flutter提供method channel给Android和iOS. 其实我们可以只用Flutter来开发UI. 其他底层逻辑可以封装Android和iOS分别的lib package. 然后直接Rx封装写回method channel. 也是一种新的开发模式.性能更好, 兼容性更好, 开发起来更有乐趣.
 
 ## 常用Widget
+### Flutter路由
+Flutter路由分为<font color=#0099ff>静态路由</font>和<font color=#0099ff>动态路由</font>两种
 
 ### ListView
 
@@ -77,3 +79,5 @@
            },
            childCount: 10,
          ),
+
+ListView中的子控件（cell）点击事件是在子空间外包用GestureDetector一层，通过其onTap方法即可实现。

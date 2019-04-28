@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 class TabView extends CupertinoTabView {
 
   static navigateTo(BuildContext context, Widget child,{bool isShowNavigation = true, String navigationTitle}){
@@ -25,12 +24,13 @@ class TabView extends CupertinoTabView {
     return CupertinoPageScaffold(
       navigationBar: navigationBar,
       child: child,
+      
     );
   }
 
   static CupertinoTabView loadTabView(String middle, Widget childer) {
     return CupertinoTabView(builder: (BuildContext context) {
       return loadPageScffloldWithTitle(childer,navBarTitle: middle);
-    });
+    },);
   }
 }
