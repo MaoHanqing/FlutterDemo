@@ -15,8 +15,15 @@
 6. Flutter提供method channel给Android和iOS. 其实我们可以只用Flutter来开发UI. 其他底层逻辑可以封装Android和iOS分别的lib package. 然后直接Rx封装写回method channel. 也是一种新的开发模式.性能更好, 兼容性更好, 开发起来更有乐趣.
 
 ## 常用Widget
-### Flutter路由
-Flutter路由分为<font color=#0099ff>静态路由</font>和<font color=#0099ff>动态路由</font>两种
+Cupertino和Material是Flutter提供的两种UI风格，前者为iOS风格。
+### Navigator&Route
+Flutter跳转是通过navigator跳转route。Route是承载全屏视图的widget，类似为iOS中的viewController。APP经常会创建大量的Route，可以通过Route的命名来寻找，通常Route的命名格式为"/a,/b"。
+Navigator记录并管理一系列Route的入栈出栈。尽管可以直接创建navigator，但是一般而言，我们常使用MaterialApp、CupertinoApp和widgetsApp自身带有的navigator。常用CupertinoPageRoute和MaterialPageRoute作为页面间跳转的Route。
+另外还有PopUpRoutes则是直接弹出，类似iOS中的present方式。我们也可以通过自定义PageRoute来进行一系列订制的内容，比如跳转动画。
+另外在app中经常会用到Tabbed navigation（由tab持有的navigator），这同一层级的navigator则由App的RootNavigator来管理。
+### CupertinoTabView
+
+可以持有多个同一层级的Navigator，分别管理各自的Route堆栈。类似iOS中的UITabBarController。
 
 ### ListView
 

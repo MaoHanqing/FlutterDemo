@@ -31,37 +31,34 @@ class _MyAppState extends State<MyApp> {
     var images = this.images();
 
     return CupertinoApp(
-      routes: {
-        "/components": (BuildContext context) =>_loadPage(ComponentList(), "Components" ),
-        "/study": (BuildContext context) =>_loadPage( Study(), "2"),
-        "/me" : (BuildContext context) =>_loadPage(Me(), "3"),
-
-      },
         home: CupertinoTabScaffold(
-            tabBar: CupertinoTabBar(
+          tabBar: CupertinoTabBar(
             items: [
-               BottomNavigationBarItem(
-              icon: images[0], title: Text("课程"), activeIcon: images[1]),
-                BottomNavigationBarItem(
-              icon: images[2], title: Text("自学"), activeIcon: images[3]),
               BottomNavigationBarItem(
-              icon: images[4], title: Text("个人"), activeIcon: images[5])
-        ],
-      ),
-      tabBuilder: (BuildContext context, int index) {
-        if (index == 0) {
-          return _loadPage(ComponentList(), "Components" );
-        } else if (index == 1) {
-          return _loadPage( Study(), "2");
-        } else {
-          return _loadPage(Me(), "3");
-        }
-      },
-    )
-    );
+                  icon: images[0], title: Text("课程"), activeIcon: images[1]),
+              BottomNavigationBarItem(
+                  icon: images[2], title: Text("自学"), activeIcon: images[3]),
+              BottomNavigationBarItem(
+                  icon: images[4], title: Text("个人"), activeIcon: images[5])
+            ],
+          ),
+          tabBuilder: (BuildContext context, int index) {
+            return CupertinoTabView(
+              builder: (BuildContext context) {
+                if (index == 0) {
+                  return _loadPage(ComponentList(), "Components");
+                } else if (index == 1) {
+                  return _loadPage(Study(), "2");
+                } else {
+                  return _loadPage(Me(), "3");
+                }
+              },
+            );
+          },
+        ));
   }
-  
-  Widget _loadPage(Widget child,String title){
+
+  Widget _loadPage(Widget child, String title) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text(title),

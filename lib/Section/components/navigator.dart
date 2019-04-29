@@ -12,25 +12,52 @@ class _NavigationState extends State<Navigation> {
       navigationBar: CupertinoNavigationBar(
         middle: Text("Page2"),
       ),
-      child: Row(
-        children: <Widget>[
-          CupertinoButton(
-            child: Text("pop"),
-            onPressed: (){
-              Navigator.of(context).pop();
-            },
+      child: SafeArea(
+          child: Container(
+            alignment: Alignment.center,
+            color: CupertinoColors.activeGreen,
+            child: Column(
+              children: <Widget>[
+                CupertinoButton(
+                  color: CupertinoColors.activeBlue,
+                  child: Text(
+                    "pop",
+                    style: TextStyle(color: CupertinoColors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                CupertinoButton(
+                  disabledColor: CupertinoColors.activeGreen,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  color: CupertinoColors.activeBlue,
+                  child: Text(
+                    "popToRoot",
+                    style: TextStyle(color: CupertinoColors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).popUntil((route) {
+                      return route.settings.name == "/";
+                    });
+                  },
+                ),
+                CupertinoButton(
+                  disabledColor: CupertinoColors.activeGreen,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  color: CupertinoColors.activeBlue,
+                  child: Text(
+                    "turn to Home",
+                    style: TextStyle(color: CupertinoColors.white),
+                  ),
+                  onPressed: () {
+                  
+                  },
+                )
+              ],
+            ),
           ),
-          CupertinoButton(
-            child: Text("popToRoot"),
-            onPressed: (){
-              Navigator.of(context).popUntil((route){
-                return route.settings.name == "/";
-              });
-            },
-          )
-        ],
-      ),
-
+        ), 
     );
   }
 }

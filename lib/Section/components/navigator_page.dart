@@ -22,33 +22,10 @@ class _NavigationPageState extends State<NavigationPage> {
           },
         ),
       ),
-      child: Row(
-        children: <Widget>[
-          CupertinoButton(
-            child: Text("PushToNextPage"),
-            onPressed: (){
-              Navigator.of(context).push(CupertinoPageRoute(
-                builder: (BuildContext context){
-                  return CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      middle: Text("page2"),
-                    ),
-                    child: SafeArea(
-                      child: Center(
-                      child: CupertinoButton(
-                        child: Text("Pop"),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                    )
-                  );
-                }
-              ));
-            },
-          ),
-        ],
+      child: SafeArea(
+        child: Container(
+        color: CupertinoColors.activeBlue,
+      ),
       ),
     );
   }

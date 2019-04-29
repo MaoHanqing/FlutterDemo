@@ -14,7 +14,7 @@ class _ComponentListState extends State<ComponentList> {
         GestureDetector(
           child: Text("Navigation"),
           onTap: () {
-            Navigator.of(context).push(CupertinoPageRoute(
+            Navigator.of(context,rootNavigator: true).push(CupertinoPageRoute(
               builder: (BuildContext context){
                 return NavigationPage();
               },
