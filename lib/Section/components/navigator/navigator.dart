@@ -13,11 +13,16 @@ class _NavigationState extends State<Navigation> {
         middle: Text("Page2"),
       ),
       child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(2),
           child: Container(
             alignment: Alignment.center,
-            color: CupertinoColors.activeGreen,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                // Padding(
+                //   padding: EdgeInsets.only(top: 20),
+                // ),
                 CupertinoButton(
                   color: CupertinoColors.activeBlue,
                   child: Text(
@@ -28,9 +33,11 @@ class _NavigationState extends State<Navigation> {
                     Navigator.of(context).pop();
                   },
                 ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 20),
+                // ),
                 CupertinoButton(
                   disabledColor: CupertinoColors.activeGreen,
-                  padding: EdgeInsets.only(left: 10, right: 10),
                   color: CupertinoColors.activeBlue,
                   child: Text(
                     "popToRoot",
@@ -42,22 +49,26 @@ class _NavigationState extends State<Navigation> {
                     });
                   },
                 ),
-                CupertinoButton(
-                  disabledColor: CupertinoColors.activeGreen,
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  color: CupertinoColors.activeBlue,
-                  child: Text(
-                    "turn to Home",
-                    style: TextStyle(color: CupertinoColors.white),
-                  ),
-                  onPressed: () {
-                  
-                  },
-                )
+                // Padding(
+                //   padding: EdgeInsets.only(top: 20),
+                // ),
+                // CupertinoButton(
+                //   disabledColor: CupertinoColors.activeGreen,
+                //   // padding: EdgeInsets.only(left: 10, right: 10),
+                //   color: CupertinoColors.activeBlue,
+                //   child: Text(
+                //     "turn to Home",
+                //     style: TextStyle(color: CupertinoColors.white),
+                //   ),
+                //   onPressed: () {
+                //     Navigator.of(context,rootNavigator: true).pop();
+                //   },
+                // )
               ],
             ),
           ),
-        ), 
+        ),
+      ),
     );
   }
 }

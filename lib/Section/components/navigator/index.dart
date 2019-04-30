@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import './navigator.dart';
+
 class NavigationPage extends StatefulWidget {
   @override
   _NavigationPageState createState() => _NavigationPageState();
@@ -13,19 +14,15 @@ class _NavigationPageState extends State<NavigationPage> {
         middle: Text("NavigationPage"),
         trailing: CupertinoButton(
           child: Text("Push"),
-          onPressed: (){
-            Navigator.of(context).push(CupertinoPageRoute(
-              builder: (context){
-                return Navigation();
-              }
-            ));
+          onPressed: () {
+            Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
+              return Navigation();
+            }));
           },
         ),
       ),
-      child: SafeArea(
-        child: Container(
+      child: Container(
         color: CupertinoColors.activeBlue,
-      ),
       ),
     );
   }
