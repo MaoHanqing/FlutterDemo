@@ -33,9 +33,9 @@ class _NavigationState extends State<Navigation> {
                     Navigator.of(context).pop();
                   },
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 20),
-                // ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                ),
                 CupertinoButton(
                   disabledColor: CupertinoColors.activeGreen,
                   color: CupertinoColors.activeBlue,

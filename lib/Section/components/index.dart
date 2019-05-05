@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import './navigator/index.dart';
+import './image/index.dart';
 class ComponentList extends StatefulWidget {
   @override
   _ComponentListState createState() => _ComponentListState();
@@ -17,6 +18,16 @@ class _ComponentListState extends State<ComponentList> {
             Navigator.of(context,rootNavigator: true).push(CupertinoPageRoute(
               builder: (BuildContext context){
                 return NavigationPage();
+              },
+            ));
+          },
+        ),
+         GestureDetector(
+          child: Text("Image"),
+          onTap: () {
+            Navigator.of(context,rootNavigator: true).push(CupertinoPageRoute(
+              builder: (BuildContext context){
+                return ImageDemo();
               },
             ));
           },
