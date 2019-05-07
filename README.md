@@ -138,6 +138,8 @@ fit：该属性用于在图片的显示空间和图片本身大小不同时指�
 
 ListView中的子控件（cell）点击事件是在子空间外包用GestureDetector一层，通过其onTap方法即可实现。
 
+### Wrap 流式布局（A widget that displays its children in multiple horizontal or vertical runs.）
+wrap 流式布局控件（类似CollectionView）
 
 ### 编写自定义平台指定代码
 
