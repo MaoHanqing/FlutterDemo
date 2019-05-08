@@ -107,8 +107,9 @@ class ImageDemoItem extends StatelessWidget {
                   width: 160,
                 ),
                 Expanded(
+                  flex: 1,
                   child: Container(
-                    child: Text(text, textAlign: TextAlign.right),
+                    child: Text(text, textAlign: TextAlign.right,),
                     padding: EdgeInsets.only(right: 10),
                   ),
                 )

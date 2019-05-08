@@ -6,18 +6,24 @@ class TextDemo extends StatefulWidget {
 }
 
 class _TextDemoState extends State<TextDemo> {
-  List items = [1, 2, 3, 4, 5];
+  //  Paint pg = Paint();
+  //创建text样式，边框，对齐方式，等
+
+  List<Text> items = [Text("简单的测试"),
+  Text("测试多行",textAlign: TextAlign.right,style: TextStyle(
+    background: Paint()
+  ),),];
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
-      backgroundColor: CupertinoColors.activeBlue,
+      // backgroundColor: CupertinoColors.activeBlue,
       child: SafeArea(
         child: ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, i) {
-            return TextItem();
+            return TextItem(items[i]);
           },
         ),
       ),
@@ -26,27 +32,15 @@ class _TextDemoState extends State<TextDemo> {
 }
 
 class TextItem extends StatelessWidget {
+  const TextItem(this.text);
+  final Text text;
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 10, bottom: 10),
-        height: 100,
-        color: CupertinoColors.destructiveRed,
-        child: Column(
-          children: <Widget>[
-
-            Expanded(
-              child: Container(
-                color: CupertinoColors.activeBlue,
-                child: Text(
-                "hello world",
-                style: TextStyle(
-                  // color: CupertinoColors.destructiveRed,
-                ),
-              ),
-              )
-            ),
-          ],
-        ));
+      width: 200,
+      height: 60,
+      color: CupertinoColors.destructiveRed,
+      child: this.text
+    );
   }
 }

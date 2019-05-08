@@ -13,45 +13,48 @@ class _ComponentListState extends State<ComponentList> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        width: 600,
-        padding: EdgeInsets.all(10),
-        child: Wrap(
-          alignment: WrapAlignment.spaceAround,
-      spacing: 8,
-      runSpacing: 20,
-      children: <Widget>[
-        ComponentItemt(
-        "Navigation",
-          onTap: () {
-            Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(
-              builder: (BuildContext context) {
-                return NavigationPage();
-              },
-            ));
-          },
-        ),
-         ComponentItemt(
-          "Image",
-          onTap: () {
-            Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(
-              builder: (BuildContext context) {
-                return ImageDemo();
-              },
-            ));
-          },
-        ),
-        ComponentItemt(
-          "Text",
-          onTap: () {
-            Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(
-              builder: (BuildContext context) {
-                return TextDemo();
-              },
-            ));
-          },
-        )
-      ],
-    )),
+          width: double.infinity,
+          padding: EdgeInsets.all(10),
+          child: Wrap(
+            alignment: WrapAlignment.spaceAround,
+            spacing: 8,
+            runSpacing: 20,
+            children: <Widget>[
+              ComponentItemt(
+                "Navigation",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return NavigationPage();
+                    },
+                  ));
+                },
+              ),
+              ComponentItemt(
+                "Image",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return ImageDemo();
+                    },
+                  ));
+                },
+              ),
+              ComponentItemt(
+                "Text",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return TextDemo();
+                    },
+                  ));
+                },
+              )
+            ],
+          )),
     );
   }
 }
@@ -67,7 +70,24 @@ class ComponentItemt extends StatelessWidget {
       height: 150,
       color: CupertinoColors.activeBlue,
       child: GestureDetector(
-        child: Text(title),
+        child: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          height: 150,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Text(title),
+              ),
+              Icon(
+                CupertinoIcons.video_camera_solid,
+                size: 30,
+                color: CupertinoColors.destructiveRed,
+              )
+            ],
+          ),
+        ),
         onTap: () {
           onTap();
         },
