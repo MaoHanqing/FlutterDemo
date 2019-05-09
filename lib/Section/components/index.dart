@@ -4,6 +4,7 @@ import './image/index.dart';
 import './text/index.dart';
 import './gridView/index.dart';
 import 'listview/index.dart';
+import 'switch/index.dart';
 class ComponentList extends StatefulWidget {
   @override
   _ComponentListState createState() => _ComponentListState();
@@ -72,6 +73,17 @@ class _ComponentListState extends State<ComponentList> {
                       .push(CupertinoPageRoute(
                     builder: (BuildContext context) {
                       return ListViewDemo();
+                    },
+                  ));
+                },
+              ),
+               ComponentItemt(
+                "Switch",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return SwitchDemo();
                     },
                   ));
                 },
