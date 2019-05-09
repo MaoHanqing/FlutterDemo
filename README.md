@@ -44,7 +44,16 @@ Navigator记录并管理一系列Route的入栈出栈。尽管可以直接创建
 可以持有多个同一层级的Navigator，分别管理各自的Route堆栈。类似iOS中的UITabBarController。
 
 ### Container
-一个常用的widget，它结合了常见的绘画，定位和大小调整,可以把它近似看为UIView，其decoration属性则是近似于UIView的layer，可以设置圆角，渐变色，边框等。
+一个常用的widget，它结合了常见的绘画，定位和大小调整,可以把它最终表现看为UIView，其decoration属性则是近似于UIView的layer，可以设置圆角，渐变色，边框等。（warning:color和decoration不能同时设置）
+```
+ assert(color == null || decoration == null,
+         'Cannot provide both a color and a decoration\n'
+         'The color argument is just a shorthand for "decoration: new BoxDecoration(color: color)".'
+       )
+```
+container结构如下：
+
+![](./README/images/container.png)
 
 #### 构造方法
 ``` dart
@@ -244,6 +253,135 @@ fit：该属性用于在图片的显示空间和图片本身大小不同时指�
 
 ListView中的子控件（cell）点击事件是在子空间外包用GestureDetector一层，通过其onTap方法即可实现。
 
+### GridView
+### **简介**
+> GridView在移动端上非常的常见的滚动列表,  会占满给出的空间区域.
+
+
+### **基本用法**
+
+>属性介绍
+
+- scrollDirection：滚动的方向，有垂直和水平两种，默认为垂直方向（Axis.vertical）。
+
+- reverse：默认是从上或者左向下或者右滚动的，这个属性控制是否反向，默认值为false，不反向滚动。
+
+- controller：控制child滚动时候的位置。
+
+- primary：是否是与父节点的PrimaryScrollController所关联的主滚动视图。
+
+- physics：滚动的视图如何响应用户的输入。
+
+- shrinkWrap：滚动方向的滚动视图内容是否应该由正在查看的内容所决定。
+
+- padding：四周的空白区域。
+
+- gridDelegate：控制GridView中子节点布局的delegate。
+
+- cacheExtent：缓存区域。
+
+### **进阶用法**
+
+> GridView 提供其他四种构造方法
+
+- GridView.builder
+- GridView.custom
+- GridView.count
+- GridView.extent
+
+> GridView.count
+指定长度创建子组件,常用方法
+```
+GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 20,
+        childAspectRatio: 2,
+        mainAxisSpacing: 10,
+        padding: const EdgeInsets.all(16.0),
+        children: <Widget>[
+
+        ],
+      )
+```
+
+> `GridView.extent`
+指定长度创建子组件
+- maxCrossAxisExtent: 设置副轴最大单项宽度，如外层容器宽度100, maxCrossAxisExtent为50，单行显示2个widget，如果外层容器变成150,则单行显示3个widget.如果超过容器宽度，或者单行没法满足两个，则按照一行填充1个widget。下面代码可以通过修改scrollDirection方向来看到不同效果。
+  ```
+  GridView.extent(
+    scrollDirection: Axis.vertical,
+    maxCrossAxisExtent: 150,
+    mainAxisSpacing: 10,
+    crossAxisSpacing: 10,
+    childAspectRatio: 1,
+    children: List.generate(
+      10,
+      (index) {
+        return Container(
+
+        );
+      },
+    ),
+  ),
+  ```
+
+> `GridView.custom`
+动态创建子组件
+- SliverGridDelegate gridDelegate : 布局相关
+- SliverChildDelegate childrenDelegate：动态创建子组件
+	```
+    //单行最大数量布局
+		gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+			crossAxisCount: 10, // 单行最大10个元素布局
+		),
+		//单列最大宽度
+    布局
+		gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+			maxCrossAxisExtent: 100, // 单列最大宽度100
+		),
+
+    // 创建无限滚动
+		childrenDelegate: SliverChildBuilderDelegate(	// 创建无限滚动
+			(context, index) {
+				return Container(
+					child: Text('$index'),
+				);
+			},
+			semanticIndexCallback: (widget, index) {	// 滚动时回调函数
+				print('index $index');
+			},
+		),
+
+    // 创建有数量的滚动
+		childrenDelegate: SliverChildListDelegate(
+			List.generate(30, (index) {
+				return Container(
+					child: Text('index $index'),
+				);
+			}),
+		),
+	```
+
+> `GridView.builder`
+按需创建组件，跟custom差不多，但增加itemCount来限制加载子组件最大值，itemCount取代childrenDelegate来动态创建组件。
+- itemCount： 子组件最大数量，默认没有限制。效果跟GridView.custom一致
+- gridDelegate：设置布局，单行最大布局数量或单列单项最大长度，参考GridView.custom
+- itemBuilder：子组件动态加载回调方法，长度受itemCount值影响，itemCount不为0且存在时，数量需小于itemCount值
+	```
+	GridView.builder(
+			itemCount: 31,
+			gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+				crossAxisCount: 3, // 单行最大数量值
+			),
+			itemBuilder: (context, index) {
+				print('index $index');
+				return Center(
+					child: Text('index $index'),
+				);
+			},
+		),
+	```
+
 ### 流式布局
 #### wrap 流式布局控件（A widget that displays its children in multiple horizontal or vertical runs.）
 自动换行控件，简单的流式布局展示方式类似于使用默认UICollectionViewFlowLayout的CollectionView。
@@ -280,6 +418,47 @@ ListView中的子控件（cell）点击事件是在子空间外包用GestureDete
 
 使用复杂.
 不能自适应子widget大小，必须通过指定父容器大小或实现TestFlowDelegate的getSize返回固定大小。
+
+### Layout
+flutter中，widgets的渲染是依据RenderBox objects。Render boxes提供其patent的约束和自己的约束尺寸。通常有三种情况。
+
+* 尽可能的大. 如 Center and ListView.
+* 和子控件大小一致. 如Transform and Opacity.
+* 尽量匹配尺寸. 如image和text，尽量和其内容大小适应。
+
+#### Unbounded constraints
+无限大小，即设置控件的maximum width 或 maximum height 为double.INFINITY。例如 Flex(Row,Column) scrollable regions(ListView,GridView 或者其他scrollView的子类)。
+
+ListView会尽可能的伸展其宽度为parent大小，假如嵌套一个竖直方向的`listview_v`在一个水平方向的`listview_h`内，则`listview_v`会尽可能伸展其宽度，达到和`listview_h`的滑动方向尺寸一样大。
+
+#### Flex
+Flex类（Row,Column）控件在有边界的约束和无边界约束会有不同的表现。在有边界约束内会尽可能的大，在无边界的约束中，它会尽可能的和子控件大小一致。同时在无边界的约束中，不能用Expanded控件来拓宽其大小,另外，在Cross direction，其大小必须是有边界的，如Column的宽，Row的高，否则将不能合理的对其子控件。
+
+#### container
+`Containers with no children try to be as big as possible ` unless the incoming constraints are unbounded, in which case they try to be as small as possible. `Containers with children size themselves to their children`. The width, height, and constraints arguments to the constructor override this.
+
+container的layout有些复杂，像女人的心思难以琢磨，其大小因子控件或者设置的不同而表现出不同情况。
+
+##### Layout behavior
+
+Since Container combines a number of other widgets each with their own layout behavior, Container's layout behavior is somewhat `complicated`.
+
+Summary: Container tries, in order: to honor alignment, to size itself to the child, to honor the width, height, and constraints, to expand to fit the parent, to be as small as possible.
+
+More specifically:
+
+If the widget has no child, no height, no width, no constraints, and the parent provides unbounded constraints, then Container tries to size as small as possible.
+
+If the widget has no child and no alignment, but a height, width, or constraints are provided, then the Container tries to be as small as possible given the combination of those constraints and the parent's constraints.
+
+If the widget has no child, no height, no width, no constraints, and no alignment, but the parent provides bounded constraints, then Container expands to fit the constraints provided by the parent.
+
+If the widget has an alignment, and the parent provides unbounded constraints, then the Container tries to size itself around the child.
+
+If the widget has an alignment, and the parent provides bounded constraints, then the Container tries to expand to fit the parent, and then positions the child within itself as per the alignment.
+
+Otherwise, the widget has a child but no height, no width, no constraints, and no alignment, and the Container passes the constraints from the parent to the child and sizes itself to match the child.
+
 
 ### 编写自定义平台指定代码
 
