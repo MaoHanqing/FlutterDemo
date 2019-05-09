@@ -5,6 +5,7 @@ import './text/index.dart';
 import './gridView/index.dart';
 import 'listview/index.dart';
 import 'switch/index.dart';
+import 'textFiled/index.dart';
 class ComponentList extends StatefulWidget {
   @override
   _ComponentListState createState() => _ComponentListState();
@@ -77,6 +78,18 @@ class _ComponentListState extends State<ComponentList> {
                   ));
                 },
               ),
+              ComponentItemt(
+                "TextField",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return TextFieldDemo();
+                    },
+                  ));
+                },
+              ),
+
                ComponentItemt(
                 "Switch",
                 onTap: () {

@@ -18,16 +18,14 @@ class _SwitchDemoState extends State<SwitchDemo> {
           alignment: Alignment.topCenter,
           padding: EdgeInsets.only(top: 30),
           child: CupertinoSwitch(
-      onChanged: (change){
-        isChanged = change;
-        this.setState((){
-
-        });
-      },
-      value: isChanged,
-      activeColor: CupertinoColors.activeBlue,
-      // dragStartBehavior: ,
-    ),
+            onChanged: (change) {
+              isChanged = change;
+              this.setState(() {});
+            },
+            value: isChanged,
+            activeColor: CupertinoColors.activeBlue,
+            // dragStartBehavior: ,
+          ),
         ),
       ),
     );
