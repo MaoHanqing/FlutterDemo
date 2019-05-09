@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import './navigator/index.dart';
 import './image/index.dart';
 import './text/index.dart';
-
+import './gridView/index.dart';
+import 'listview/index.dart';
 class ComponentList extends StatefulWidget {
   @override
   _ComponentListState createState() => _ComponentListState();
@@ -52,6 +53,28 @@ class _ComponentListState extends State<ComponentList> {
                     },
                   ));
                 },
+              ),
+               ComponentItemt(
+                "GridView",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return GridViewDemo();
+                    },
+                  ));
+                },
+              ),
+              ComponentItemt(
+                "ListView",
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(CupertinoPageRoute(
+                    builder: (BuildContext context) {
+                      return ListViewDemo();
+                    },
+                  ));
+                },
               )
             ],
           )),
@@ -65,33 +88,30 @@ class ComponentItemt extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 150,
-      color: CupertinoColors.activeBlue,
-      child: GestureDetector(
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 150,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Text(title),
-              ),
-              Icon(
-                CupertinoIcons.video_camera_solid,
-                size: 30,
-                color: CupertinoColors.destructiveRed,
-              )
-            ],
-          ),
+    return GestureDetector(
+      child: Container(
+        width: 150,
+        height: 150,
+        decoration: BoxDecoration(
+          border: Border.all(color: CupertinoColors.activeOrange, width: 1),
         ),
-        onTap: () {
-          onTap();
-        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: Text(title),
+            ),
+            Icon(
+              CupertinoIcons.video_camera_solid,
+              size: 30,
+              color: CupertinoColors.destructiveRed,
+            )
+          ],
+        ),
       ),
+      onTap: () {
+        onTap();
+      },
     );
   }
 }
