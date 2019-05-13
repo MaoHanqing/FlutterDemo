@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                 } else if (index == 1) {
                   return _loadPage(Study(), "2");
                 } else {
-                  return _loadPage(Me(), "3");
+                  return Me();
                 }
               },
             );
