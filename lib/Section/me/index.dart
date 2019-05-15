@@ -8,14 +8,21 @@ class Me extends StatefulWidget {
 class _MeState extends State<Me> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SafeArea(
+      top: false,
+      child: Container(
       child: Column(
         children: <Widget>[
           _MeHeaderView(),
           _MidView(),
-          _ListView(),
+          _ListView(
+            tapCallBack: (i) {
+              print(i);
+            },
+          ),
         ],
       ),
+    ),
     );
   }
 }
@@ -29,13 +36,16 @@ class __MeHeaderViewState extends State<_MeHeaderView> {
   @override
   Widget build(BuildContext context) {
     double stateHeight = MediaQuery.of(context).padding.top;
+    print(stateHeight);
     return Container(
       height: 125 + stateHeight,
-      color: CupertinoColors.activeOrange,
       child: Stack(
         children: <Widget>[
-          Image.asset(
-            "images/icon/bg_blue@3x.png",
+          Positioned.fill(
+            child: Image.asset(
+              "images/icon/bg_blue@3x.png",
+              fit: BoxFit.fill,
+            ),
           ),
           Positioned.fill(
             child: Image.asset(
@@ -45,7 +55,7 @@ class __MeHeaderViewState extends State<_MeHeaderView> {
           ),
           Positioned(
             left: 0,
-            top: 10,
+            top: 10  ,
             child: Container(
               child: CupertinoButton(
                 minSize: 24,
@@ -63,7 +73,7 @@ class __MeHeaderViewState extends State<_MeHeaderView> {
           ),
           Positioned(
             right: 0,
-            top: 10,
+            top: 10  ,
             child: Row(
               children: <Widget>[
                 CupertinoButton(
@@ -103,6 +113,7 @@ class __MeHeaderViewState extends State<_MeHeaderView> {
                 print("Header did Tap");
               },
               child: Container(
+                color: CupertinoColors.white.withOpacity(0),
                 padding: EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,81 +247,105 @@ class __MidViewState extends State<_MidView> {
     );
   }
 }
+
 class _ListViewItem {
- _ListViewItem(this.image,this.title,{this.trail});
+  _ListViewItem(this.image, this.title, {this.trail = ""});
   String image;
   String title;
-  String trail;
+  String trail = "";
 }
 
-
+typedef ItemDidSelectedCallback = void Function(int i);
 
 class _ListView extends StatelessWidget {
-  List<List<_ListViewItem>> items = [
-    [_ListViewItem("images/icon/ic_list_badge@3x.png", "我的勋章"), 
-    _ListViewItem("images/icon/ic_list_ability@3x.png", "我的能力"), 
+  final List items = [
+    _ListViewItem("images/icon/ic_list_badge@3x.png", "我的勋章"),
+    _ListViewItem("images/icon/ic_list_ability@3x.png", "我的能力"),
     _ListViewItem("images/icon/ic_list_peiyin@3x.png", "配音作品"),
-    _ListViewItem("images/icon/ic_list_cuoti@3x.png", "错题库") 
-    ],
-    [_ListViewItem("images/icon/ic_list_class@3x.png", "我的班级"),
-     _ListViewItem("images/icon/ic_list_membership@3x.png", "我的套餐")],
-    [_ListViewItem("images/icon/ic_list_yijian@3x.png", "帮助与反馈")]
+    _ListViewItem("images/icon/ic_list_cuoti@3x.png", "错题库"),
+    null,
+    _ListViewItem("images/icon/ic_list_class@3x.png", "我的班级"),
+    _ListViewItem("images/icon/ic_list_membership@3x.png", "我的套餐"),
+    null,
+    _ListViewItem("images/icon/ic_list_yijian@3x.png", "帮助与反馈")
   ];
 
-  List<Widget> listViews() {
-    List<Widget> listviews = [];
-    for (var sectionItems in items) {
-      listviews.add(ListView.separated(
-        padding: EdgeInsets.only(top: 10),
-        itemBuilder: (context, i) {
-          return Container(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Image.asset(
-                        sectionItems[i].image,
-                        width: 24,
-                        height: 24,
-                      ),
-                      Text(
-                        sectionItems[i].title,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0x000000).withOpacity(0.65)),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Text(sectionItems[i].trail),
-                      Image.asset("images/icon/ic_arrows_grey@3x.png",width: 5,height: 10,)
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-        itemCount: sectionItems.length,
-        separatorBuilder: (context, i) {
-          return Container(
-            height: 1,
-            padding: EdgeInsets.only(left: 16),
-            width: double.infinity,
-          );
-        },
-      ));
-    }
-    return listviews;
-  }
+  final ItemDidSelectedCallback tapCallBack;
 
+  _ListView({Key key, this.tapCallBack}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return  this.listViews().first;
+    return Expanded(
+      child: Container(
+        color: Color(0x000000).withOpacity(0.05),
+        child: ListView.separated(
+          padding: EdgeInsets.only(top: 10),
+          itemBuilder: (context, i) {
+            var item = items[i];
+            if (item == null) {
+              return Padding(padding: EdgeInsets.only(top: 10));
+            }
+            return GestureDetector(
+              child: Container(
+                color: CupertinoColors.white,
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          Image.asset(
+                            items[i].image,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Text(
+                            items[i].title,
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0x000000).withOpacity(0.65)),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          Text(items[i].trail ?? ""),
+                          Image.asset(
+                            "images/icon/ic_arrows_grey@3x.png",
+                            width: 5,
+                            height: 10,
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              onTap: () {
+                this.tapCallBack(i);
+              },
+            );
+          },
+          itemCount: items.length,
+          separatorBuilder: (context, i) {
+            var item = items[i];
+            if (item == null || items[i + 1] == null) {
+              return Container();
+            }
+            return Container(
+              height: 1,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                width: 16,
+                color: CupertinoColors.white,
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
