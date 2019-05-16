@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_boost (0.0.1):
+    - Flutter
+    - xservice_kit
+  - xservice_kit (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_boost (from `.symlinks/plugins/flutter_boost/ios`)
+  - xservice_kit (from `.symlinks/plugins/xservice_kit/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  flutter_boost:
+    :path: ".symlinks/plugins/flutter_boost/ios"
+  xservice_kit:
+    :path: ".symlinks/plugins/xservice_kit/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  flutter_boost: 0e85ea37c74ed39ee7b91a35612afa1605557484
+  xservice_kit: a2f1b35addc126fce8687aeb183ab0c1ada5b7f3
+
+PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+
+COCOAPODS: 1.6.1
