@@ -493,6 +493,8 @@ https://juejin.im/post/5b6cea3c6fb9a04fca3ca608
 
 ### keynotes
 0. Column和row内嵌套listview 需在listview外包裹一层Expanded,Column放到ListView内需衣服内部Expanded控件。
+1. 在native和flutter交互过程中，注意代码的调用顺序。
+2. Flutter本身还有bug，官方文档提供的方法有时并不正确。https://github.com/flutter/flutter/issues/27216
 ### Flutter 使用过程中的confused
 0. flutter 控件太多，学习曲线拉伸的极长。
 1. flutter布局和swift布局逻辑不太一样，其控件的默认大小是刚好满足内容所需要的且无法直接对其设置大小，例如Text的大小仅仅是其文本的内容大小，若想要其在某个size内居中则需要在外面再嵌套一层，实现起来不太方便。
