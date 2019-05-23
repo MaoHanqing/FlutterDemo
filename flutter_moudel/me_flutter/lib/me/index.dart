@@ -8,8 +8,8 @@ class Me extends StatefulWidget {
 }
 
 class _MeState extends State<Me> {
-  static const EventChannel eventChannel_init =
-      const EventChannel('com.alo7Student/init');
+  static const EventChannel eventChannel =
+      const EventChannel('samples.flutter.io/charging');
   static const MethodChannel methodChannel_actions =
       const MethodChannel('com.alo7Student/me/actions');
 
@@ -23,27 +23,24 @@ class _MeState extends State<Me> {
   @override
   void initState() {
     super.initState();
-    print("flutter_init");
-    eventChannel_init
-        .receiveBroadcastStream()
-        .listen(_onEvent, onError: _onError);
+    eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
   }
 
   void _onEvent(Object event) {
-    final Map<String, dynamic> map = event;
-    print(map);
     setState(() {
-        this.goldNum = map["gold"];
-        this.name = map["name"];
-      // this.goldNum = event.
+      this.goldNum = "_onEvent";
     });
   }
 
-  // 错误返回
-  void _onError(Object error) {}
+  void _onError(Object error) {
+    setState(() {
+      goldNum = 'Battery status: unknown.';
+    });
+  }
 
   //方法回掉
   _listItemDidSelected(int index) async {
+    
     await methodChannel_actions.invokeMethod("listDidSelected", index);
   }
 
@@ -54,23 +51,27 @@ class _MeState extends State<Me> {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      home:  Container(
+      home: Container(
         child: Column(
           children: <Widget>[
-            _MeHeaderView((id) {
+            _MeHeaderView(this.name, this.avatar, (id) {
               _actionsDidTap(id);
             }),
             _MidView(goldNum, (id) {
               _actionsDidTap(id);
             }),
             _ListView(
+              error: this.error,
+              gold: this.goldNum,
+              medal: this.medal,
+              ablility: this.ablility,
               tapCallBack: (i) {
                 _listItemDidSelected(i);
               },
             ),
           ],
         ),
-    ),
+      ),
     );
   }
 }
@@ -78,8 +79,10 @@ class _MeState extends State<Me> {
 typedef ActionCallBack = void Function(String identifier);
 
 class _MeHeaderView extends StatelessWidget {
-  _MeHeaderView(this.didTap);
+  _MeHeaderView(this.name, this.avart, this.didTap);
   final ActionCallBack didTap;
+  final String name;
+  final String avart;
   @override
   Widget build(BuildContext context) {
     double stateHeight = 20;
@@ -133,7 +136,7 @@ class _MeHeaderView extends StatelessWidget {
                     height: 24,
                   ),
                   onPressed: () {
-                    didTap("setting");  
+                    didTap("setting");
                   },
                 ),
                 CupertinoButton(
@@ -171,8 +174,10 @@ class _MeHeaderView extends StatelessWidget {
                           child: Container(
                             width: 50,
                             height: 50,
-                            child: Image.asset(
-                                "images/avatar/avatar_bo_40@3x.png"),
+                            child: avart == null
+                                ? Image.asset(
+                                    "images/avatar/avatar_bo_40@3x.png")
+                                : Image.network(avart),
                           ),
                         ),
                         Container(
@@ -181,7 +186,7 @@ class _MeHeaderView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "艾米丽",
+                                this.name ?? "未设置",
                                 style: TextStyle(
                                   color: CupertinoColors.white,
                                   fontSize: 24,
@@ -223,7 +228,7 @@ class _MidView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:  CupertinoColors.white,
+      color: CupertinoColors.white,
       height: 76,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -305,23 +310,40 @@ class _ListViewItem {
 typedef ItemDidSelectedCallback = void Function(int i);
 
 class _ListView extends StatelessWidget {
-  final List items = [
-    _ListViewItem("images/icon/ic_list_badge@3x.png", "我的勋章"),
-    _ListViewItem("images/icon/ic_list_ability@3x.png", "我的能力"),
-    _ListViewItem("images/icon/ic_list_peiyin@3x.png", "配音作品"),
-    _ListViewItem("images/icon/ic_list_cuoti@3x.png", "错题库"),
-    null,
-    _ListViewItem("images/icon/ic_list_class@3x.png", "我的班级"),
-    _ListViewItem("images/icon/ic_list_membership@3x.png", "我的套餐"),
-    null,
-    _ListViewItem("images/icon/ic_list_yijian@3x.png", "帮助与反馈")
-  ];
-
   final ItemDidSelectedCallback tapCallBack;
+  final String gold;
+  final String medal;
+  final String ablility;
+  final String error;
+  _ListView(
+      {Key key,
+      this.gold,
+      this.medal,
+      this.ablility,
+      this.error,
+      this.tapCallBack})
+      : super(key: key);
 
-  _ListView({Key key, this.tapCallBack}) : super(key: key);
+  List getItems() {
+    return [
+      _ListViewItem("images/icon/ic_list_badge@3x.png", "我的勋章",
+          trail: this.medal ?? "0"),
+      _ListViewItem("images/icon/ic_list_ability@3x.png", "我的能力",
+          trail: this.ablility ?? "立即测试"),
+      _ListViewItem("images/icon/ic_list_peiyin@3x.png", "配音作品"),
+      _ListViewItem("images/icon/ic_list_cuoti@3x.png", "错题库",
+          trail: this.error ?? ""),
+      null,
+      _ListViewItem("images/icon/ic_list_class@3x.png", "我的班级"),
+      _ListViewItem("images/icon/ic_list_membership@3x.png", "我的套餐"),
+      null,
+      _ListViewItem("images/icon/ic_list_yijian@3x.png", "帮助与反馈")
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+    var items = getItems();
     return Expanded(
       child: Container(
         color: Color(0x000000).withOpacity(0.05),
@@ -347,11 +369,14 @@ class _ListView extends StatelessWidget {
                             width: 24,
                             height: 24,
                           ),
-                          Text(
-                            items[i].title,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0x000000).withOpacity(0.65)),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              items[i].title,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0x000000).withOpacity(0.65)),
+                            ),
                           )
                         ],
                       ),
@@ -359,7 +384,13 @@ class _ListView extends StatelessWidget {
                     Container(
                       child: Row(
                         children: <Widget>[
-                          Text(items[i].trail ?? ""),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text(items[i].trail ?? "",style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0x000000).withOpacity(0.65)),
+                            ),
+                          ),
                           Image.asset(
                             "images/icon/ic_arrows_grey@3x.png",
                             width: 5,
