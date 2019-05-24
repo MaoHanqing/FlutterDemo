@@ -487,14 +487,11 @@ https://github.com/flutter/flutter/wiki/Add-Flutter-to-existing-apps#write-code-
  https://mp.weixin.qq.com/s/VlleaiIzsZHZDkDrGgYi1g
 2. 腾讯Now视频直播方案
 https://juejin.im/post/5b6cea3c6fb9a04fca3ca608
-2. 今日头发方案
 
-
-
-### keynotes
-0. Column和row内嵌套listview 需在listview外包裹一层Expanded,Column放到ListView内需衣服内部Expanded控件。
+#### keynotes
 1. 在native和flutter交互过程中，注意代码的调用顺序。
 2. Flutter本身还有bug，官方文档提供的方法有时并不正确。https://github.com/flutter/flutter/issues/27216
+
 ### Flutter 使用过程中的confused
 0. flutter 控件太多，学习曲线拉伸的极长。
 1. flutter布局和swift布局逻辑不太一样，其控件的默认大小是刚好满足内容所需要的且无法直接对其设置大小，例如Text的大小仅仅是其文本的内容大小，若想要其在某个size内居中则需要在外面再嵌套一层，实现起来不太方便。
@@ -503,3 +500,4 @@ https://juejin.im/post/5b6cea3c6fb9a04fca3ca608
 4. flutter在控件使用上不够自由，没有丰富的API来订制一些特殊需求，比如navigation bar的一些设置。
 5. flutter 没有类似UITableview中section 的概念，所以有多个section的list没有现成控件可以直接使用。
 6. 类型推断在书写代码时没问题，但在编译过程中可能会因类型为dynamic不匹配crash，需显性的确定类型。
+7. Column和row内嵌套listview 需在listview外包裹一层Expanded,Column放到ListView内需衣服内部Expanded控件。
